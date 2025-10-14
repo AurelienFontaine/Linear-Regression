@@ -2,6 +2,7 @@ import pandas as pd
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 def normalize_data(data):
     """Normalize data using min-max scaling"""
@@ -15,10 +16,10 @@ def calculate_cost(predictions, actual):
     """Calculate Mean Squared Error"""
     return np.mean((predictions - actual) ** 2)
 
-def train_model(filename, learning_rate=0.01, iterations=1000):
+def train_model(filename, learning_rate=0.05, iterations=10000):
     # Read the dataset
     data = pd.read_csv(filename)
-    mileage = data['km'].values  # Using correct column name from CSV
+    mileage = data['km'].values 
     price = data['price'].values
 
     # Store original data for denormalization
@@ -57,8 +58,8 @@ def train_model(filename, learning_rate=0.01, iterations=1000):
         cost = calculate_cost(predictions, price_norm)
         cost_history.append(cost)
 
-        # Print progress every 100 iterations
-        if (i + 1) % 100 == 0:
+        # Print progress every 1à00 iterations
+        if (i + 1) % 1000 == 0:
             print(f"Iteration {i + 1}: Cost = {cost:.6f}")
 
     # Calculate final metrics
@@ -129,7 +130,11 @@ def train_model(filename, learning_rate=0.01, iterations=1000):
 
     plt.tight_layout()
     plt.savefig('training_results.png', dpi=300, bbox_inches='tight')
-    plt.show()
+    # Only attempt to show a window for interactive backends
+    if 'agg' not in matplotlib.get_backend().lower():
+        plt.show()
+    else:
+        plt.close()
 
     return model_data
 

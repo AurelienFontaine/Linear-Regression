@@ -2,6 +2,7 @@ import pandas as pd
 import pickle
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
 
 def normalize_data(data):
     """Normalize data using min-max scaling"""
@@ -72,10 +73,6 @@ def evaluate_model(dataset_file='data.csv'):
     # Calculate metrics
     metrics = calculate_metrics(price, predictions)
 
-    # Print results
-    # print("=" * 50)
-    # print("MODEL EVALUATION RESULTS")
-    # print("=" * 50)
     print(f"Dataset size: {len(price)} examples")
     print(f"Model parameters: theta0 = {theta0:.4f}, theta1 = {theta1:.4f}")
     print()
@@ -92,23 +89,23 @@ def evaluate_model(dataset_file='data.csv'):
     print("INTERPRETATION:")
     print("-" * 30)
     if metrics['R2'] > 0.8:
-        print("✓ Excellent model fit (R² > 0.8)")
+        print(" Excellent model fit (R² > 0.8)")
     elif metrics['R2'] > 0.6:
-        print("✓ Good model fit (R² > 0.6)")
+        print(" Good model fit (R² > 0.6)")
     elif metrics['R2'] > 0.4:
-        print("⚠ Moderate model fit (R² > 0.4)")
+        print(" Moderate model fit (R² > 0.4)")
     else:
-        print("⚠ Poor model fit (R² < 0.4)")
+        print(" Poor model fit (R² < 0.4)")
     
     print(f"• On average, predictions are off by ${metrics['MAE']:.2f}")
     print(f"• The model explains {metrics['R2']*100:.1f}% of the variance in car prices")
     
     if metrics['MAPE'] < 10:
-        print("✓ Very accurate predictions (MAPE < 10%)")
+        print(" Very accurate predictions (MAPE < 10%)")
     elif metrics['MAPE'] < 20:
-        print("✓ Good accuracy (MAPE < 20%)")
+        print(" Good accuracy (MAPE < 20%)")
     else:
-        print("⚠ Moderate accuracy (MAPE > 20%)")
+        print(" Moderate accuracy (MAPE > 20%)")
 
     # Create evaluation plots
     plt.figure(figsize=(15, 10))
@@ -200,7 +197,11 @@ def evaluate_model(dataset_file='data.csv'):
 
     plt.tight_layout()
     plt.savefig('model_evaluation.png', dpi=300, bbox_inches='tight')
-    plt.show()
+    # Only show when interactive backend is available
+    if 'agg' not in matplotlib.get_backend().lower():
+        plt.show()
+    else:
+        plt.close()
 
     return metrics
 

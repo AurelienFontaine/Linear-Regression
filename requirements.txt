@@ -1,0 +1,18 @@
+pandas>=1.3.0
+numpy>=1.21.0
+matplotlib>=3.4.0
+
+
+Use virtual env :
+cd Linear_Regression
+source venv/bin/activate
+
+Leave it :
+deactivate
+
+
+Use the algo :
+cd Linear_Regression/srcs
+../venv/bin/python train.py //train the model theta0 et theta1
+../venv/bin/python evaluate.py //check if it was a good or not choice of parameters
+../venv/bin/python prediction.py //Main program that take the mileage and give the price

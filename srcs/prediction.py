@@ -64,13 +64,6 @@ def predict_price():
             
             print(f"Estimated price for mileage {mileage:.0f} km is: ${estimated_price:.2f}")
             
-            # Show confidence based on how close the mileage is to training data
-            if mileage_min <= mileage <= mileage_max:
-                print("✓ Prediction confidence: High (within training data range)")
-            elif mileage < mileage_min * 1.2 and mileage > mileage_max * 0.8:
-                print("⚠ Prediction confidence: Medium (close to training data range)")
-            else:
-                print("⚠ Prediction confidence: Low (far from training data range)")
                 
         except ValueError:
             print("Please enter a valid number for mileage.")
