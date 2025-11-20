@@ -1,0 +1,15 @@
+.venv/
+new_venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+.DS_Store
+.idea/
+.vscode/
+.ipynb_checkpoints/
+*.png
+*.svg
+
+
