@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+import os
 
 def normalize_data(data):
     """Normalize data using min-max scaling"""
@@ -62,9 +63,8 @@ def evaluate_model(dataset_file='data.csv'):
     price_min = model_data['price_min']
     price_max = model_data['price_max']
 
-    # Normalize the data
-    mileage_norm = normalize_data(mileage)
-    price_norm = normalize_data(price)
+    # Normalize mileage using training min/max to match model's scale
+    mileage_norm = (mileage - mileage_min) / (mileage_max - mileage_min)
 
     # Make predictions
     predictions_norm = theta0 + theta1 * mileage_norm
@@ -206,4 +206,6 @@ def evaluate_model(dataset_file='data.csv'):
     return metrics
 
 if __name__ == "__main__":
-    evaluate_model()
+    # Resolve dataset path relative to this file to avoid CWD issues
+    dataset_path = os.path.join(os.path.dirname(__file__), "data.csv")
+    evaluate_model(dataset_path)

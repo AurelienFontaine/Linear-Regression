@@ -3,6 +3,7 @@ import pickle
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib
+import os
 
 def normalize_data(data):
     """Normalize data using min-max scaling"""
@@ -139,5 +140,6 @@ def train_model(filename, learning_rate=0.05, iterations=10000):
     return model_data
 
 if __name__ == "__main__":
-    dataset_file = "data.csv"
+    # Resolve dataset path relative to this file to avoid CWD issues
+    dataset_file = os.path.join(os.path.dirname(__file__), "data.csv")
     train_model(dataset_file)
